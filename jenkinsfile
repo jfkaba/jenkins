@@ -12,7 +12,7 @@ pipeline {
             }
         }
         stage('Post Build') { 
-            step {
+            steps {
                 archiveArtifacts artifacts: '*/*.war', followSymlinks: false
             }
         }
