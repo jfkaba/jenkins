@@ -16,8 +16,6 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                deploy adapters: [tomcat9(credentialsId: '7eda10f8-d418-43d3-b571-24dd595e6141', path: '', url: '')], contextPath: '/spark', war: 'target/*.war' 
-            }
-        }
+deploy adapters: [tomcat9(credentialsId: 'jenkins3', path: '', url: 'http://localhost:8080')], contextPath: '/spark', war: '*/*.war'        }
     }
 }
