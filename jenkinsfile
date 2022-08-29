@@ -3,18 +3,20 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-               sh "echo lol"
+               sh "mvn clean install"
             }
-        }
         stage('Test') { 
             steps {
-                sh "ls" 
+               sh "echo Test"
+            }
+        }
+        stage('Post Build') { 
+            archiveArtifacts artifacts: '*/*.war', followSymlinks: false
             }
         }
         stage('Deploy') { 
             steps {
-                sh "pwd"
-                sh "echo fin" 
+                deploy adapters: [tomcat9(credentialsId: '7eda10f8-d418-43d3-b571-24dd595e6141', path: '', url: '')], contextPath: '/spark', war: 'target/*.war' 
             }
         }
     }
