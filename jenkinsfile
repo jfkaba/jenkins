@@ -5,17 +5,21 @@ pipeline {
             steps {
                sh "mvn clean install"
             }
+        }
         stage('Test') { 
             steps {
                sh "echo Test"
             }
         }
         stage('Post Build') { 
-            archiveArtifacts artifacts: '*/*.war', followSymlinks: false
+            step {
+                archiveArtifacts artifacts: '*/*.war', followSymlinks: false
             }
         }
         stage('Deploy') { 
             steps {
-deploy adapters: [tomcat9(credentialsId: 'jenkins3', path: '', url: 'http://localhost:8080')], contextPath: '/spark', war: '*/*.war'        }
+                deploy adapters: [tomcat9(credentialsId: 'jenkins3', path: '', url: 'http://localhost:8080')], contextPath: '/spark', war: '*/*.war'        
+            }   
+        }
     }
-}
+ }
